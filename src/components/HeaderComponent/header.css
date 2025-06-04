@@ -1,0 +1,46 @@
+.header-component{
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-main{
+    display: flex;
+    width: 450px;
+    align-items: center;
+    justify-content: start;
+}
+.header-logo{
+    display: flex;
+    justify-content: center;
+    width: 120px;
+}
+.header-account{
+    display: flex;
+    margin-right: 15px;
+    width: 150px;
+    font-size: 18px;
+    justify-content: space-between;
+}
+.nav-menu{
+    display: flex;
+    margin-left: 15px;
+    width: 300px;
+    font-size: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.nav-link{
+    text-decoration: none;
+
+    transition-property: color;
+    transition-duration: 0.3s;
+}
+.nav-link:visited{
+    color: black;
+}
+.nav-link:hover{
+    color: #8ec5ff;
+}

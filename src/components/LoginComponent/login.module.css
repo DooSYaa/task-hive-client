@@ -1,0 +1,15 @@
+.loginContainer {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+.formLabel{
+    font-size: 20px;
+}
+.formInput{
+    width: 300px;
+    height: 30px;
+    font-size: 14px;
+}
