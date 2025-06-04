@@ -2,10 +2,14 @@ import './registration.module.css'
 import styles from "../RegistrationComponent/registration.module.css";
 import Button from "../ButtonComponent/Button.jsx";
 import {useState} from "react";
+import {useAuth} from "../Context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 export default function Registration(){
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {login} = useAuth();
+    const navigate = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault()
@@ -19,7 +23,10 @@ export default function Registration(){
             })
         })
             .then(res => res.json())
-            .then(data => {console.log(data)})
+            .then(data => {
+                login(data.userName, data.token);
+                navigate('/');
+            })
             .catch(err => console.log(err));
     }
     return (

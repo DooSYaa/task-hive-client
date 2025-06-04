@@ -22,8 +22,6 @@ export default function Login(){
             .then(response => response.json())
             .then(data => {
                 const userName = data.userName;
-                console.log(data)
-                console.log(data.token)
                 if(userName) {
                     login(userName, data.token);
                     navigate('/');

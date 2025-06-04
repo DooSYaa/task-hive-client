@@ -8,7 +8,7 @@
 }
 .header-main{
     display: flex;
-    width: 450px;
+    width: 550px;
     align-items: center;
     justify-content: start;
 }
@@ -27,7 +27,7 @@
 .nav-menu{
     display: flex;
     margin-left: 15px;
-    width: 300px;
+    width: 350px;
     font-size: 20px;
     flex-direction: row;
     justify-content: space-between;
