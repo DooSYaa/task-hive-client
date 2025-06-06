@@ -3,20 +3,32 @@
     border: 1px solid black;
 }
 .friend-container{
+    background-color: lightgray;
     display: flex;
     width: 600px;
     flex-direction: column;
     border: 1px solid black;
 }
 .friend-main-container{
+    background-color: magenta;
     display: flex;
     flex-direction: row;
     border: 1px solid black;
 }
 .box{
-    display: flex;
-    flex-direction: column;
+    display: block;
+    padding: 0 0 0 10px;
+    background-color: white;
+    flex-direction: row;
     width: 500px;
     height: 300px;
     border: 1px solid black;
+}
+.friend-input{
+    display: block;
+}
+.friend-button{
+    display: block;
+    width: 100px;
+    height: 50px;
 }

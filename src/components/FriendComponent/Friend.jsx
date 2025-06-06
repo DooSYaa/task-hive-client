@@ -39,7 +39,7 @@ export default function Freind(){
             return;
         }
         try {
-            const response = await fetch('http://localhost:5291/api/Friend/addFriend', {
+            await fetch('http://localhost:5291/api/Friend/addFriend', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -47,16 +47,21 @@ export default function Freind(){
                 },
                 credentials: 'include',
                 body: JSON.stringify(searchQuery)
-            });
+            })
+                .then(response => {
+                    console.log(response);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    setSuccess(data.message);
+                })
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            setSuccess(data);
-            setError(null);
-            setSearchQuery("");
+            // const data = await response.json();
+            // console.log(data);
+            // setSuccess(data);
+            // setError(null);
+            // setSearchQuery("");
         } catch (error) {
             console.error('Error adding friend', error);
             setError("Failed to add friend. Please try again.");
