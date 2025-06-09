@@ -1,40 +1,19 @@
-.chat-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.friend-selector {
-    margin-bottom: 20px;
-}
-
-.friend-selector select {
-    padding: 8px;
-    width: 200px;
-}
-
-.messages {
-    border: 1px solid #ccc;
-    padding: 10px;
-    max-height: 400px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-.message {
-    margin-bottom: 10px;
-}
-
-.input-container {
+.main-chat-container {
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    border: 1px solid black;
 }
-
-input {
-    flex: 1;
-    padding: 8px;
+.friends-container{
+    height: 400px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid black;
 }
-
-button {
-    padding: 8px 16px;
+.chat-container{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    border: 1px solid black;
 }

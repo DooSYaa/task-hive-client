@@ -56,12 +56,6 @@ export default function Freind(){
                     console.log(data.message);
                     setSuccess(data.message);
                 })
-
-            // const data = await response.json();
-            // console.log(data);
-            // setSuccess(data);
-            // setError(null);
-            // setSearchQuery("");
         } catch (error) {
             console.error('Error adding friend', error);
             setError("Failed to add friend. Please try again.");

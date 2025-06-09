@@ -9,8 +9,12 @@ export default function Header() {
     const navigate = useNavigate();
 
     function handleLogout() {
-        logout();
-        navigate("/");
+        try {
+            navigate("/");
+            logout();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -33,7 +37,8 @@ export default function Header() {
                     </nav>
                     <nav className="header-account">
                         <Link className="nav-link" to="/user">{user.userName}</Link>
-                        <Link className="nav-link" to="#" onClick={handleLogout}>Logout</Link>
+                        {/*<Link className="nav-link" to="#" onClick={handleLogout}>Logout</Link>*/}
+                        <button className="nav-link" onClick={handleLogout}>Logout</button>
                     </nav>
                 </>
             ) : (

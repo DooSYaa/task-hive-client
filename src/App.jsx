@@ -5,7 +5,7 @@ import Registration from "./components/RegistrationComponent/Registration.jsx";
 import Login from "./components/LoginComponent/Login.jsx";
 import Home from "./components/HomeComponent/Home.jsx";
 import Account from "./components/AccountComponent/Account.jsx";
-import Freind from "./components/FriendComponent/Friend.jsx";
+import Friend from "./components/FriendComponent/Friend.jsx";
 import Chat from "./components/ChatComponent/Chat.jsx";
 
 
@@ -20,7 +20,7 @@ export default function App() {
                     <Route path='/registration' element={<Registration />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/user' element={<Account />} />
-                    <Route path='/friends' element={<Freind />} />
+                    <Route path='/friends' element={<Friend />} />
                     <Route path='/chat' element={<Chat />} />
                 </Routes>
             </div>
