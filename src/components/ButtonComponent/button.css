@@ -9,13 +9,19 @@
 }
 
 .button.accept{
+    padding: 0 5px 0 5px;
+    width: auto;
     background-color: rgba(80,161,67,0.99);
 }
 .button.default{
+    padding: 0 5px 0 5px;
+    width: auto;
     background-color: rgba(0, 0, 0);
     color: white;
 }
 .button.primary{
+    padding: 0 5px 0 5px;
+    width: auto;
     background-color: rgb(63, 189, 161);
 }
 .button.login{

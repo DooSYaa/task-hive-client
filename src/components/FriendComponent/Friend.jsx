@@ -100,18 +100,16 @@ export default function Freind(){
                 <div className="friend-container">
                     <h1>Welcome to Freind component</h1>
                     <p>Your friends: </p>
-                    <ul>
                         {friends.length > 0 ? (
                             friends.map((friend, index) => (
-                                <li key={index}>{friend}</li>
+                                <ol key={index}>{friend}</ol>
                             ))
                         ) : (
                             <h4>No friends found</h4>
                         )}
-                    </ul>
                 </div>
                 <div className="box">
-                    <h4>Add friends</h4>
+                    <h3>Add friends</h3>
                     <input
                         type="text"
                         value={searchQuery}
@@ -119,7 +117,8 @@ export default function Freind(){
                         placeholder="Enter username"
                         className="friend-input"
                     />
-                    <Button onClick={handleAddFriend} className="friend-button">
+                    <br/>
+                    <Button variant={'primary'} onClick={handleAddFriend} className="friend-button">
                         Add Friend
                     </Button>
                     {error && <p className="error-message">{error}</p>}

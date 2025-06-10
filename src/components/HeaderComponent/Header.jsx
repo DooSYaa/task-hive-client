@@ -7,8 +7,8 @@ export default function Header() {
 
     function handleLogout() {
         try {
-            window.location.href = '/';
             logout();
+            window.location.href = '/';
         } catch (error) {
             console.log(error);
         }
