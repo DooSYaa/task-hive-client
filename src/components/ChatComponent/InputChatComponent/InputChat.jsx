@@ -1,4 +1,3 @@
-import Button from '../../ButtonComponent/Button.jsx';
 
 export default function InputChat({value, onChange}) {
     return (
