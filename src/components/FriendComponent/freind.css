@@ -32,3 +32,15 @@
     width: 100px;
     height: 50px;
 }
+.friends-request-list{
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.friends-requests{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: white;
+}

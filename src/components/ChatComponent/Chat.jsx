@@ -38,9 +38,10 @@ export default function Chat(){
                     accessTokenFactory: () => user.token,
                 })
                 .configureLogging(LogLevel.Information)
+                .withAutomaticReconnect()
                 .build();
 
-            conn.on("ReceiveMessage", (sender, message) => {
+            conn.on("ReceivePrivateMessage", (message, sender) => {
                 setMessages((prev) => [...prev, { sender, message, timestamp: new Date() }]);
             });
 
@@ -51,14 +52,16 @@ export default function Chat(){
             setConnection(conn);
         }
     }, [user]);
-    const sendMessage = async () => {
-        await connection.invoke("SendPrivateMessage", user.userName, selectedFriend, message);
-        setMessage("");
-        console.error("Error sending message:");
-    };
+    function sendMessage() {
+        try{
+            connection.invoke("SendPrivateMessage", user.userName, selectedFriend, message);
+            setMessage("");
+        } catch (error) {
+            console.error("Error sending message: ", error);
+        }
+    }
     return (
         <div className="main-chat-container">
-            Main div
             <div className="friends-container">
                     {friends.length > 0 ? (
                         friends.map((friend, index) => (
@@ -74,20 +77,21 @@ export default function Chat(){
                     )}
             </div>
             <div className="chat-container">
-                <h4>Chat container</h4>
                 {selectedFriend ? (
                     <>
-                        <h4>have selected friend</h4>
-                        <ChatInput />
-                    </>
-                ) : (
-                    <>
-                        <h4>No friend</h4>
-                        <div>
-                            <ChatInput />
+                        <h4>have selected friend: {selectedFriend}</h4>
+                        {messages.map((msg, index) => (
+                            <div key={index} className={`message ${msg.sender === user.userName ? 'sent' : 'received'}`}>
+                                <p>{msg.message}<span>{msg.timestamp.toLocaleTimeString()}</span></p>
+                            </div>
+                        ))}
+                        <div className="chat-input-container">
+                            <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} />
                             <Button onClick={sendMessage}>Send</Button>
                         </div>
                     </>
+                ) : (
+                    <h4>Select a friend to start chatting</h4>
                 )}
             </div>
         </div>

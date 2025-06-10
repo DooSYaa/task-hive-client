@@ -2,11 +2,13 @@
 import './freind.css'
 import {useEffect, useState} from "react";
 import {useAuth} from "../Context/AuthContext.jsx";
+import Button from "../ButtonComponent/Button.jsx";
 export default function Freind(){
     const [friends, setFriends] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [friendsRequest, setFriendsRequest] = useState([]);
     const {user} = useAuth();
     useEffect(()=>{
         if(user){
@@ -62,8 +64,36 @@ export default function Freind(){
             setSuccess(null);
         }
     };
+    useEffect(() => {
+         fetch('http://localhost:5291/api/Friend/getFriendsRequest', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setFriendsRequest(data);
+            })
+    }, [user]);
 
-
+    function acceptFriendRequest(friendName){
+        fetch('http://localhost:5291/api/Friend/addFriend', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            },
+            body: JSON.stringify(friendName),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setFriendsRequest(friendsRequest.filter(friend => friend !== friendName));
+            })
+    }
     return (
         <>
             <div className="friend-main-container">
@@ -89,11 +119,24 @@ export default function Freind(){
                         placeholder="Enter username"
                         className="friend-input"
                     />
-                    <button onClick={handleAddFriend} className="friend-button">
+                    <Button onClick={handleAddFriend} className="friend-button">
                         Add Friend
-                    </button>
+                    </Button>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}
+                </div>
+                <div className="friends-requests">
+                    <h4>Friend request</h4>
+                    {friendsRequest.length > 0 ? (
+                        friendsRequest.map((friend, index) => (
+                            <div className="friends-request-list">
+                                <p key={index}>{friend}</p>
+                                <Button variant={'accept'} onClick={() => acceptFriendRequest(friend)}>Accept</Button>
+                            </div>
+                        ))
+                    ) : (
+                        <h4>No requests found</h4>
+                    )}
                 </div>
             </div>
         </>

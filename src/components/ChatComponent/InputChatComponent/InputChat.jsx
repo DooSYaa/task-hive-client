@@ -1,12 +1,13 @@
 import Button from '../../ButtonComponent/Button.jsx';
 
-export default function InputChat() {
+export default function InputChat({value, onChange}) {
     return (
         <div className="input-chat-container">
-            <input type="text"
-            className="input-chat__input"
-            placeholder="Enter message"
-            />
+            <textarea
+                className="input-chat__input"
+                value={value}
+                onChange={onChange}
+            ></textarea>
         </div>
     )
 }

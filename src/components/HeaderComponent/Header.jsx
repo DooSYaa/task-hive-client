@@ -1,16 +1,13 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useAuth} from "../Context/AuthContext.jsx";
-import Login from '../LoginComponent/Login.jsx';
-import Registration from '../RegistrationComponent/Registration.jsx';
 import './header.css';
 
 export default function Header() {
     const { user, logout } = useAuth();
-    const navigate = useNavigate();
 
     function handleLogout() {
         try {
-            navigate("/");
+            window.location.href = '/';
             logout();
         } catch (error) {
             console.log(error);
@@ -37,8 +34,7 @@ export default function Header() {
                     </nav>
                     <nav className="header-account">
                         <Link className="nav-link" to="/user">{user.userName}</Link>
-                        {/*<Link className="nav-link" to="#" onClick={handleLogout}>Logout</Link>*/}
-                        <button className="nav-link" onClick={handleLogout}>Logout</button>
+                        <Link className="nav-link" to="#" onClick={handleLogout}>Logout</Link>
                     </nav>
                 </>
             ) : (
