@@ -82,7 +82,7 @@ export default function Chat(){
                         <h4>have selected friend: {selectedFriend}</h4>
                         {messages.map((msg, index) => (
                             <div key={index} className={`message ${msg.sender === user.userName ? 'sent' : 'received'}`}>
-                                <p>{msg.message}<span>{msg.timestamp.toLocaleTimeString()}</span></p>
+                                <p>{msg.sender} {msg.message} <span>{msg.timestamp.toLocaleTimeString()}</span></p>
                             </div>
                         ))}
                         <div className="chat-input-container">
