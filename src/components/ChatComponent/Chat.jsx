@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useAuth} from "../Context/AuthContext.jsx";
 import ChatInput from './InputChatComponent/InputChat.jsx';
 import './chat.css'
@@ -11,6 +11,7 @@ export default function Chat(){
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [connection, setConnection] = useState(null);
+    const messagesEndRef = useRef(null);
     const {user} = useAuth();
     useEffect(()=>{
         fetch('http://localhost:5291/api/Friend/getFriends', {
@@ -52,8 +53,17 @@ export default function Chat(){
             setConnection(conn);
         }
     }, [user]);
+    useEffect(()=>{
+        if(messagesEndRef.current) {
+            messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+        }
+    }, [messages]);
     function sendMessage() {
         try{
+            if(message.trim() === '')
+            {
+                return
+            }
             connection.invoke("SendPrivateMessage", user.userName, selectedFriend, message);
             setMessage("");
         } catch (error) {
@@ -65,34 +75,37 @@ export default function Chat(){
             <div className="friends-container">
                     {friends.length > 0 ? (
                         friends.map((friend, index) => (
-                            <div>
-                                <button
-                                    key={index}
-                                    onClick={() => setSelectedFriend(friend)}
-                                >{friend}</button>
+                            <div key={index}>
+                                <button onClick={() => setSelectedFriend(friend)}>
+                                    {friend}
+                                </button>
                             </div>
                         ))
                     ) : (
                         <h3>No friends found :(</h3>
                     )}
             </div>
-            <div className="chat-container">
-                {selectedFriend ? (
-                    <>
-                        <h4>have selected friend: {selectedFriend}</h4>
-                        {messages.map((msg, index) => (
-                            <div key={index} className={`message ${msg.sender === user.userName ? 'sent' : 'received'}`}>
-                                <p>{msg.sender} {msg.message} <span>{msg.timestamp.toLocaleTimeString()}</span></p>
-                            </div>
-                        ))}
-                        <div className="chat-input-container">
-                            <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} />
-                            <Button onClick={sendMessage}>Send</Button>
-                        </div>
-                    </>
-                ) : (
-                    <h4>Select a friend to start chatting</h4>
-                )}
+            <div className="chat-main-container">
+                <div className="chat-container">
+                    <div ref={messagesEndRef} className="messages">
+                        {selectedFriend ? (
+                            <>
+                                <h4>have selected friend: {selectedFriend}</h4>
+                                {messages.map((msg, index) => (
+                                    <div key={index} className={`message ${msg.sender === user.userName ? 'sent' : 'received'}`}>
+                                        <p>{msg.message} <sub>{msg.timestamp.toLocaleTimeString()}</sub></p>
+                                    </div>
+                                ))}
+                            </>
+                        ) : (
+                            <h4>Select a friend to start chatting</h4>
+                        )}
+                    </div>
+                </div>
+                <div className="chat-input-container">
+                    <ChatInput value={message} onChange={(e) => setMessage(e.target.value)} />
+                    <Button variant={'chat'} onClick={sendMessage}>Send</Button>
+                </div>
             </div>
         </div>
     )
