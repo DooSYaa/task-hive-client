@@ -76,9 +76,9 @@ export default function Chat(){
                     {friends.length > 0 ? (
                         friends.map((friend, index) => (
                             <div key={index}>
-                                <button onClick={() => setSelectedFriend(friend)}>
+                                <div className="friend-name-container" onClick={() => setSelectedFriend(friend)}>
                                     {friend}
-                                </button>
+                                </div>
                             </div>
                         ))
                     ) : (

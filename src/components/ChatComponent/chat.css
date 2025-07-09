@@ -64,3 +64,8 @@
     border-radius: 5px;
     resize: none;
 }
+.friend-name-container {
+    display: flex;
+    flex-grow: 1;
+    background-color: #8ec5ff;
+}

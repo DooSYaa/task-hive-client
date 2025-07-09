@@ -7,40 +7,38 @@ import {useNavigate} from "react-router-dom";
 export default function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    //const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState(null);
     const [emailError, setEmailError] = useState(null);
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    function handleSubmit(e){
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!email || !password) {
-            setEmailError(!email ? 'Поле email обязательно' : null);
-            setPasswordError(!password ? 'Поле пароля обязательно' : null);
+            setEmailError(!email ? 'email is required!' : null);
+            setPasswordError(!password ? 'password required' : null);
             return;
         }
         if (!emailError && !passwordError) {
-            console.log('Вход:', { email, password });
-            fetch('http://localhost:5291/api/Account/login', {
+            const response = await fetch('http://localhost:5291/api/Account/login', {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     "email": email,
                     "password": password,
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const userName = data.userName;
-                    if(userName) {
-                        login(userName, data.token);
-                        navigate('/');
-                    } else {
-                        throw new Error('Username not found in this response')
-                    }
-                })
-                .catch(err => console.log(err));
+                }),
+            });
+            if(!response.ok){
+                throw new Error(`Error occured: ${response.status}`);
+            }
+            const data = await response.json();
+            const userName = data.userName;
+            if(userName){
+                login(userName, data.token);
+                navigate('/');
+            } else {
+                throw new Error('Username not found in this response')
+            }
         }
     }
     useEffect(() => {
@@ -57,14 +55,16 @@ export default function Login(){
             setPasswordError(null);
         }
     }, [password]);
+
     useEffect(() => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (email && !emailPattern.test(email)) {
-            setEmailError('Введите корректный email');
+            setEmailError('Enter a valid email');
         } else {
             setEmailError(null);
         }
     }, [email]);
+
     return (
         <div className={styles.loginMainContainer}>
             <div className={styles.loginContainer}>
